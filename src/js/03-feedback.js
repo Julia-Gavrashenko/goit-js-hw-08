@@ -23,13 +23,25 @@ function onFormSubmit(event) {
   localStorage.removeItem(`feedback-form-state`);
 }
 
+// first function
+// function getSavedMessage() {
+//   const savedMessage = JSON.parse(localStorage.getItem(`feedback-form-state`));
+//   console.log(savedMessage);
+
+//   if (savedMessage) {
+//     input.value = savedMessage.email;
+//     textarea.value = savedMessage.message;
+//   }
+
+// }
+
+// second function
 function getSavedMessage() {
-  const savedMessage = JSON.parse(localStorage.getItem(`feedback-form-state`));
-  console.log(savedMessage);
-
+  let savedMessage = localStorage.getItem(`feedback-form-state`);
   if (savedMessage) {
-    input.value = savedMessage.email;
-    textarea.value = savedMessage.message;
+    savedMessage = JSON.parse(savedMessage);
+    Object.entries(savedMessage).forEach(([key, value]) => {
+      form.elements[key].value = value;
+    });
   }
-
 }
