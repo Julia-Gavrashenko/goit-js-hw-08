@@ -17,13 +17,45 @@ function onFormInput(event) {
   console.log(formData);
 }
 
+
+// corrected function onFormSubmit
 function onFormSubmit(event) {
+  const elements = event.currentTarget.elements;
+  const email = elements.email.value;
+  const message = elements.message.value;
+
+  if (email === `` || message === ``) {
+    const message = alert`Enter your data`;
+    return false;
+  }
   event.preventDefault();
   event.target.reset();
   localStorage.removeItem(`feedback-form-state`);
 }
 
-// first function
+
+// corrected function getSavedMessage
+function getSavedMessage() {
+  let savedMessage = localStorage.getItem(`feedback-form-state`);
+  if (savedMessage) {
+    savedMessage = JSON.parse(savedMessage);
+    Object.entries(savedMessage).forEach(([key, value]) => {
+      form.elements[key].value = value;
+    });
+  }
+}
+
+
+
+
+// initial function onFormSubmit
+// function onFormSubmit(event) {
+//   event.preventDefault();
+//   event.target.reset();
+//   localStorage.removeItem(`feedback-form-state`);
+// }
+
+// initial function getSavedMessage
 // function getSavedMessage() {
 //   const savedMessage = JSON.parse(localStorage.getItem(`feedback-form-state`));
 //   console.log(savedMessage);
@@ -35,13 +67,5 @@ function onFormSubmit(event) {
 
 // }
 
-// second function
-function getSavedMessage() {
-  let savedMessage = localStorage.getItem(`feedback-form-state`);
-  if (savedMessage) {
-    savedMessage = JSON.parse(savedMessage);
-    Object.entries(savedMessage).forEach(([key, value]) => {
-      form.elements[key].value = value;
-    });
-  }
-}
+
+
