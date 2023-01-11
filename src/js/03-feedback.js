@@ -7,7 +7,7 @@ const input = document.querySelector('.feedback-form input');
 form.addEventListener(`input`, throttle(onFormInput, 500));
 form.addEventListener(`submit`, onFormSubmit);
 
-const formData = {};
+let formData = {};
 
 getSavedMessage();
 
@@ -17,8 +17,6 @@ function onFormInput(event) {
   console.log(formData);
 }
 
-
-// corrected function onFormSubmit
 function onFormSubmit(event) {
   const elements = event.currentTarget.elements;
   const email = elements.email.value;
@@ -33,39 +31,14 @@ function onFormSubmit(event) {
   localStorage.removeItem(`feedback-form-state`);
 }
 
-
-// corrected function getSavedMessage
 function getSavedMessage() {
-  let savedMessage = localStorage.getItem(`feedback-form-state`);
+  const savedMessage = localStorage.getItem(`feedback-form-state`);
+
   if (savedMessage) {
-    savedMessage = JSON.parse(savedMessage);
-    Object.entries(savedMessage).forEach(([key, value]) => {
+    formData = JSON.parse(savedMessage);
+
+    Object.entries(formData).forEach(([key, value]) => {
       form.elements[key].value = value;
     });
   }
 }
-
-
-
-
-// initial function onFormSubmit
-// function onFormSubmit(event) {
-//   event.preventDefault();
-//   event.target.reset();
-//   localStorage.removeItem(`feedback-form-state`);
-// }
-
-// initial function getSavedMessage
-// function getSavedMessage() {
-//   const savedMessage = JSON.parse(localStorage.getItem(`feedback-form-state`));
-//   console.log(savedMessage);
-
-//   if (savedMessage) {
-//     input.value = savedMessage.email;
-//     textarea.value = savedMessage.message;
-//   }
-
-// }
-
-
-
